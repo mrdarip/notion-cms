@@ -4,6 +4,11 @@
 #
 name: Deploy Next.js site to Pages
 
+env:
+  # Set the NODE_ENV environment variable to production for all steps
+  NOTION_TOKEN={{ secrets.NOTION_TOKEN }}
+  NOTION_DATABASE_ID={{ secrets.NOTION_DATABASE_ID }}
+
 on:
   # Runs on pushes targeting the default branch
   push:
