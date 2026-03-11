@@ -11,11 +11,12 @@ export default async function PostsList({ posts }: { posts:(PageObjectResponse |
 
     const postsList = posts.map(post => {
         if (!("properties" in post)) return null
+        if (!("created_time" in post)) return null
 
         const titleProp = post.properties["Title"]
-        if (!titleProp || titleProp.type !== "title") return null
+        if (!titleProp || titleProp.type !== "title" || !Array.isArray(titleProp.title) || titleProp.title.length === 0) return null
 
-        const title = titleProp.title[0]?.plain_text || "Untitled"
+        const title = titleProp.title[0].plain_text || "Untitled"
 
         const postData: Post = {
             id: post.id,

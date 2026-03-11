@@ -67,6 +67,8 @@ async function renderBlock(block: PartialBlockObjectResponse | BlockObjectRespon
                     </li>
                 );
             case 'image':
+                /*
+                
                 return (
                     <Image
                         key={block.id}
@@ -75,7 +77,7 @@ async function renderBlock(block: PartialBlockObjectResponse | BlockObjectRespon
                         width={600}
                         height={400}
                     />
-                );
+                );*/
 
             case 'table':
                 const response = await notion.blocks.children.list({
