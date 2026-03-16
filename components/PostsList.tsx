@@ -1,4 +1,5 @@
 import { DataSourceObjectResponse, PageObjectResponse, PartialDataSourceObjectResponse, PartialPageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
+import Link from "next/link";
 
 type Post = {
     id: string;
@@ -48,10 +49,12 @@ export default async function PostsList({ posts }: { posts:(PageObjectResponse |
                 if (!post) return null
                 return (
                     <li key={index}>
-                        <h2>{post.title}</h2>
-                        {post.description && <p>{post.description}</p>}
-                        <p>Created: {new Date(post.created).toLocaleDateString()}</p>
-                        <p>Last Edited: {new Date(post.lastEdited).toLocaleDateString()}</p>
+                        <Link href={`/posts/${post.id}`}>
+                            <h2>{post.title}</h2>
+                            {post.description && <p>{post.description}</p>}
+                            <p>Created: {new Date(post.created).toLocaleDateString()}</p>
+                            <p>Last Edited: {new Date(post.lastEdited).toLocaleDateString()}</p>
+                        </Link>
                     </li>
                 )
             })}
