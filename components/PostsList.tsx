@@ -6,6 +6,7 @@ type Post = {
     description: string | null;
     created: string;
     lastEdited: string;
+    published: boolean;
 }
 
 export default async function PostsList({ posts }: { posts:(PageObjectResponse | PartialPageObjectResponse | PartialDataSourceObjectResponse | DataSourceObjectResponse)[]}) {
@@ -24,19 +25,22 @@ export default async function PostsList({ posts }: { posts:(PageObjectResponse |
             ? descriptionProp.rich_text[0].plain_text
             : null
 
+        const publishedProp = post.properties["Publish"];
+        const published = publishedProp && publishedProp.type === "checkbox" ? publishedProp.checkbox === true : false;
 
         const postData: Post = {
             id: post.id,
             title,
             description,
             created: post.created_time,
-            lastEdited: post.last_edited_time
+            lastEdited: post.last_edited_time,
+            published
         }
 
         return postData
 
 
-    })
+    }).filter((post): post is Post => post?.published === true) 
   return (
     <div>
         <ul>
