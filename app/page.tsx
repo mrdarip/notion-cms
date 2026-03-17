@@ -1,12 +1,10 @@
 
 import PostsList from "@/components/PostsList";
-import { getDatabasePages } from "@/lib/notion/getDatabasePages";
+import { postsList } from "@/lib/notion/posts";
 
 export default async function Home() {
 
-
-  const posts = await getDatabasePages(process.env.NOTION_DATABASE_ID || "");
-  console.log("Posts:", posts);
+  const posts = postsList
 
   return (
     <>
