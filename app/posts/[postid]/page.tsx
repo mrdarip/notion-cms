@@ -4,7 +4,7 @@ import { postsList } from "@/lib/notion/posts";
 
 export async function generateStaticParams() {
   const paths = postsList.map(post => ({
-    params: { postid: post.id }
+    postid: post.id
   }));
 
     return paths;
