@@ -3,6 +3,7 @@ import React from 'react';
 import Image from 'next/image';
 
 import { notion } from "@/lib/notion/client";
+import { RichText } from './RichText';
 
 interface BlocksContentProps {
     blocks: (PartialBlockObjectResponse | BlockObjectResponse)[];
@@ -22,7 +23,7 @@ async function renderBlock(block: PartialBlockObjectResponse | BlockObjectRespon
                 return (
                     <p key={block.id}>
                         {block.paragraph?.rich_text?.map((text: any, i: number) => (
-                            <span key={i}>{text.plain_text}</span>
+                            <RichText key={i} text={text} index={i} />
                         ))}
                     </p>
                 );
@@ -30,7 +31,7 @@ async function renderBlock(block: PartialBlockObjectResponse | BlockObjectRespon
                 return (
                     <h1 key={block.id}>
                         {block.heading_1?.rich_text?.map((text: any, i: number) => (
-                            <span key={i}>{text.plain_text}</span>
+                            <RichText key={i} text={text} index={i} />
                         ))}
                     </h1>
                 );
@@ -38,7 +39,7 @@ async function renderBlock(block: PartialBlockObjectResponse | BlockObjectRespon
                 return (
                     <h2 key={block.id}>
                         {block.heading_2?.rich_text?.map((text: any, i: number) => (
-                            <span key={i}>{text.plain_text}</span>
+                            <RichText key={i} text={text} index={i} />
                         ))}
                     </h2>
                 );
@@ -46,7 +47,7 @@ async function renderBlock(block: PartialBlockObjectResponse | BlockObjectRespon
                 return (
                     <h3 key={block.id}>
                         {block.heading_3?.rich_text?.map((text: any, i: number) => (
-                            <span key={i}>{text.plain_text}</span>
+                            <RichText key={i} text={text} index={i} />
                         ))}
                     </h3>
                 );
@@ -54,7 +55,7 @@ async function renderBlock(block: PartialBlockObjectResponse | BlockObjectRespon
                 return (
                     <li key={block.id}>
                         {block.bulleted_list_item?.rich_text?.map((text: any, i: number) => (
-                            <span key={i}>{text.plain_text}</span>
+                            <RichText key={i} text={text} index={i} />
                         ))}
                     </li>
                 );
@@ -62,7 +63,7 @@ async function renderBlock(block: PartialBlockObjectResponse | BlockObjectRespon
                 return (
                     <li key={block.id}>
                         {block.numbered_list_item?.rich_text?.map((text: any, i: number) => (
-                            <span key={i}>{text.plain_text}</span>
+                            <RichText key={i} text={text} index={i} />
                         ))}
                     </li>
                 );
@@ -92,7 +93,9 @@ async function renderBlock(block: PartialBlockObjectResponse | BlockObjectRespon
                             {response.results.map((row: any) => (
                                 <tr key={row.id}>
                                     {row.table_row?.cells.map((cell: any, i: number) => (
-                                        <td key={i}>{cell[0]?.plain_text}</td>
+                                        <td key={i}>{cell?.map((richText: any, idx: number) => (
+                                            <RichText key={idx} text={richText} index={idx} />
+                                        ))}</td>
                                     ))}
                                 </tr>
                             ))}
